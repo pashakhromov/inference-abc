@@ -3,17 +3,17 @@ import numpy as np
 
 def partition(n):
     """
-Integer partitions of a number.
+    Integer partitions of a number.
 
-Parameters:
-    n (int)
+    Parameters:
+        n (int)
 
-Returns:
+    Returns:
         (list of tuples)
 
-Example:
-    partition(3) -> [(3,), (2, 1), (1, 1, 1)]
-"""
+    Example:
+        partition(3) -> [(3,), (2, 1), (1, 1, 1)]
+    """
     answer = set()
     answer.add((n, ))
     for x in range(1, n):
@@ -39,6 +39,8 @@ class Parititon:
         self.part = partition(self.n)
         self.repr = partition_repr(self.n)
         self.map = partition_map(self.n)
+    def __repr__(self):
+        return 'Partition({})'.format(self.n)
 
 
 if __name__ == '__main__':
