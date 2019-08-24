@@ -23,14 +23,42 @@ def partition(n):
 
 
 def partition_repr(x):
+    """
+    Pretty print for integer partition.
+    If int tuple is passed, it formats it (2, 1) -> '{2,1}'.
+    If int is passed, calculates its partition and formats all tuples in the partition:
+    3 -> [(3,), (2, 1), (1, 1, 1)] -> ['{3}', '{2,1}', '{1,1,1}']
+
+    Parameters:
+        x (tuple of ints / int) 
+
+    Returns:
+        (str / list of str)
+
+    Example:
+        partition_repr((2, 1)) -> '{2,1}'
+        partition_repr(3) -> ['{3}', '{2,1}', '{1,1,1}']
+    """
     if isinstance(x, tuple):
         return '{' + ','.join([str(i) for i in x]) + '}'
     if isinstance(x, int):
         return [partition_repr(p) for p in partition(x)]
 
 
-def partition_map(x):
-    return {p: partition_repr(p) for p in partition(x)}
+def partition_map(n):
+    """
+    Provides mapping between partition and its pretty print.
+
+    Parameters:
+        n (int) 
+
+    Returns:
+        (dict)
+
+    Example:
+        partition_map(3) -> {(3,): '{3}', (2, 1): '{2,1}', (1, 1, 1): '{1,1,1}'}
+    """
+    return {p: partition_repr(p) for p in partition(n)}
 
 
 class Parititon:
