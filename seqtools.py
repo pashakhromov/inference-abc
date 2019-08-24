@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 from collections import Counter
 import itertools
+from partition import Parititon
 
 
 def drop_na_seq(sample):
@@ -123,3 +124,41 @@ def encode_sample(sample):
         l.extend([i for _ in range(v)])
     np.random.shuffle(l)
     return l
+
+
+def n_counts(sample):
+    """
+    Returns n-counts.
+
+    Parameters:
+        sample (list of ints) encoded sample.
+    
+    Returns:
+        (tuple)
+    """
+    # slow version
+    # return tuple(sorted(Counter(sample).values(), reverse=True))
+    counts = np.bincount(sample)
+    counts[::-1].sort()
+    counts = counts[counts > 0]
+    return tuple(counts)
+
+
+def sample2hist(sample, resample_size, n_itr):
+    """
+    Histogram .
+
+    Parameters:
+        sample (list of ints) encoded sample.
+        resample_size (int) size of a sample to do resampling.
+        n_itr (int) number of iterations that builds the histogram.
+    
+    Returns:
+        Histogram (pd.Series) with index being partitions.
+    """
+    part = Parititon(resample_size)
+    if len(sample) == 0:
+        return pd.Series(np.nan, index=part.repr)
+    h = pd.DataFrame(np.random.choice(sample, size=(n_itr, part.n), replace=True)).apply(n_counts, axis=1)
+    h = h.value_counts() * 1.0 / n_itr
+    return h.rename(part.map)
