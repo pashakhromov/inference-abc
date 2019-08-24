@@ -108,7 +108,7 @@ def a_counts(sample):
     return {j: counts.count(j) for j in range(1, len(sample)+1)}
 
 
-def encode_sample(sample):
+def encode_sample(sample, pad_with_nan=False, sample_size=None):
     """
     Returns encoded sample: ['abc', 'xyz', 'abc'] -> [0, 1, 0] then shuffled.
 
@@ -123,6 +123,8 @@ def encode_sample(sample):
     for i, v in enumerate(d.values()):
         l.extend([i for _ in range(v)])
     np.random.shuffle(l)
+    if pad_with_nan:
+        return l + [np.nan] * (sample_size - len(l))    
     return l
 
 
