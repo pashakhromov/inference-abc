@@ -111,9 +111,12 @@ def a_counts(sample):
 def encode_sample(sample, pad_with_nan=False, sample_size=None):
     """
     Returns encoded sample: ['abc', 'xyz', 'abc'] -> [0, 1, 0] then shuffled.
+    If pad_with_nan=True and sample_size=5 then [0, 1, 0, np.nan, np.nan].
 
     Parameters:
         sample (pd.Series): with index sample ids and values being sequences.
+        pad_with_nan (bool).
+        sample_size (int) desired sample size.
 
     Returns:
         (list)
