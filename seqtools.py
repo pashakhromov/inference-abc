@@ -151,7 +151,7 @@ def n_counts(sample):
 
 def sample2hist(sample, resample_size, n_itr):
     """
-    Histogram .
+    Histogram.
 
     Parameters:
         sample (list of ints) encoded sample.
@@ -162,8 +162,9 @@ def sample2hist(sample, resample_size, n_itr):
         Histogram (pd.Series) with index being partitions.
     """
     part = Parititon(resample_size)
-    if len(sample) == 0:
+    sample_non_na = np.round(pd.Series(sample).dropna()).astype(int)
+    if len(sample_non_na) == 0:
         return pd.Series(np.nan, index=part.repr)
-    h = pd.DataFrame(np.random.choice(sample, size=(n_itr, part.n), replace=True)).apply(n_counts, axis=1)
+    h = pd.DataFrame(np.random.choice(sample_non_na, size=(n_itr, part.n), replace=True)).apply(n_counts, axis=1)
     h = h.value_counts() * 1.0 / n_itr
     return h.rename(part.map)
