@@ -52,4 +52,7 @@ for w in range(n_win):
     stat['sample'][w]    = seqtools.encode_sample(sample_str, pad_with_nan=True, sample_size=n_seq)
 
 for k, v in stat.items():
-    pd.Series(v).to_csv('chr_{ch}_{k}.csv'.format(ch=ch, k=k))
+    if k in ['sample']:
+        pd.DataFrame(v).to_csv('chr_{ch}_{k}.csv'.format(ch=ch, k=k))
+    else:
+        pd.Series(v).to_csv('chr_{ch}_{k}.csv'.format(ch=ch, k=k))
