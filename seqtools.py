@@ -1,3 +1,5 @@
+"""Tools to work with samples of sequences."""
+
 import pandas as pd
 import numpy as np
 from collections import Counter
@@ -9,7 +11,7 @@ def drop_na_seq(sample):
     """
     Drops all sequences with NA SNPs.
 
-    Parameters:
+    Args:
         sample (pd.DataFrame): with index sample ids and columns being SNP positions.
 
     Returns:
@@ -24,7 +26,7 @@ def coverage(sample):
     """
     Coverage = number of non-NA sequences / total number.
 
-    Parameters:
+    Args:
         sample (pd.DataFrame): with index sample ids and columns being SNP positions.
 
     Returns:
@@ -37,7 +39,7 @@ def n_segregating_sites(sample):
     """
     Number of segregating sites.
 
-    Parameters:
+    Args:
         sample (pd.DataFrame): with index sample ids and columns being SNP positions.
 
     Returns:
@@ -52,7 +54,7 @@ def avg_n_poly(sample):
     """
     Average number of polymorphisms. This function is SLOW.
 
-    Parameters:
+    Args:
         sample (pd.DataFrame): with index sample ids and columns being SNP positions.
 
     Returns:
@@ -65,7 +67,7 @@ def watterson(sample):
     """
     Watterson estimate of theta.
 
-    Parameters:
+    Args:
         sample (pd.DataFrame): with index sample ids and columns being SNP positions.
 
     Returns:
@@ -80,7 +82,7 @@ def n_mutations(sample, ref):
     """
     Number of mutations in a sample in comparison with reference sequence.
 
-    Parameters:
+    Args:
         sample (pd.DataFrame): with index sample ids and columns being SNP positions.
         ref (pd.DataFrame) with only one index named 'ref' and columns being SNP positions.
 
@@ -98,7 +100,7 @@ def a_counts(sample):
     """
     Returns dict of a-counts {j: a_j}.
 
-    Parameters:
+    Args:
         sample (pd.Series): with index sample ids and values being sequences.
 
     Returns:
@@ -113,7 +115,7 @@ def encode_sample(sample, pad_with_nan=False, sample_size=None):
     Returns encoded sample: ['abc', 'xyz', 'abc'] -> [0, 1, 0] then shuffled.
     If pad_with_nan=True and sample_size=5 then [0, 1, 0, np.nan, np.nan].
 
-    Parameters:
+    Args:
         sample (pd.Series): with index sample ids and values being sequences.
         pad_with_nan (bool).
         sample_size (int) desired sample size.
@@ -127,7 +129,7 @@ def encode_sample(sample, pad_with_nan=False, sample_size=None):
         l.extend([i for _ in range(v)])
     np.random.shuffle(l)
     if pad_with_nan:
-        return l + [np.nan] * (sample_size - len(l))    
+        return l + [np.nan] * (sample_size - len(l))
     return l
 
 
@@ -135,9 +137,9 @@ def n_counts(sample):
     """
     Returns n-counts.
 
-    Parameters:
+    Args:
         sample (list of ints) encoded sample.
-    
+
     Returns:
         (tuple)
     """
@@ -151,13 +153,15 @@ def n_counts(sample):
 
 def sample2hist(sample, resample_size, n_itr):
     """
-    Histogram.
+    Create a histogram of n-counts by
+    resampling a given sample n_itr times
+    drawing samples of size resample_size.
 
-    Parameters:
+    Args:
         sample (list of ints) encoded sample.
         resample_size (int) size of a sample to do resampling.
         n_itr (int) number of iterations that builds the histogram.
-    
+
     Returns:
         Histogram (pd.Series) with index being partitions.
     """
@@ -165,6 +169,8 @@ def sample2hist(sample, resample_size, n_itr):
     sample_non_na = np.round(pd.Series(sample).dropna()).astype(int)
     if len(sample_non_na) == 0:
         return pd.Series(np.nan, index=part.repr)
-    h = pd.DataFrame(np.random.choice(sample_non_na, size=(n_itr, part.n), replace=True)).apply(n_counts, axis=1)
+    h = pd.DataFrame(
+        np.random.choice(sample_non_na, size=(n_itr, part.n), replace=True)
+    ).apply(n_counts, axis=1)
     h = h.value_counts() * 1.0 / n_itr
     return h.rename(part.map)
