@@ -55,10 +55,10 @@ for w in range(n_win):
 
 for k, v in stat.items():
     if k in ['sample']:
-        pd.DataFrame(v).to_csv('chr_{ch}_{k}.csv'.format(ch=ch, k=k))
+        pd.DataFrame(v).T.to_csv('chr_{ch}_{k}.csv'.format(ch=ch, k=k))
     else:
         pd.Series(v).to_csv('chr_{ch}_{k}.csv'.format(ch=ch, k=k))
 
 t2 = time.time()
 with open('time_seq.txt', 'w') as f:
-    f.write('{0.2f}'.format(t2-t1))
+    f.write('{:0.2f}'.format(t2-t1))
