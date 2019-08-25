@@ -22,7 +22,7 @@ with open(os.path.join(path, 'chr_{}.fasta'.format(ch)), 'r') as f:
 
 l_chr = np.unique([len(v) for v in seq.values()])[0]
 n_seq = len(seq)
-n_win = 1000  # l_chr // w_size
+n_win = l_chr // w_size
 pd.Series({
     'l_chr': l_chr,
     'n_seq': n_seq,
