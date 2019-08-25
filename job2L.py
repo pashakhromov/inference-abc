@@ -2,6 +2,8 @@ import pandas as pd
 import numpy as np
 from Bio import SeqIO
 import seqtools
+import time
+t1 = time.time()
 
 ch = '2L'
 w_size = 100
@@ -19,7 +21,7 @@ with open('/home/pasha/chr_data/chr_{}.fasta'.format(ch), 'r') as f:
 
 l_chr = np.unique([len(v) for v in seq.values()])[0]
 n_seq = len(seq)
-n_win = l_chr // w_size
+n_win = 1000 #l_chr // w_size
 pd.Series({
     'l_chr': l_chr,
     'n_seq': n_seq,
@@ -56,3 +58,7 @@ for k, v in stat.items():
         pd.DataFrame(v).to_csv('chr_{ch}_{k}.csv'.format(ch=ch, k=k))
     else:
         pd.Series(v).to_csv('chr_{ch}_{k}.csv'.format(ch=ch, k=k))
+
+t2 = time.time()
+with open('time_seq.txt', 'w') as f:
+    f.write('{0.2f}'.format(t2-t1))
