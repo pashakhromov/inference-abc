@@ -12,7 +12,7 @@ path = '/home/pasha/chr_data'
 seq = {}
 seq_ref = ''
 
-with open(os.path.join('chr_{}.fasta'.format(ch)), 'r') as f:
+with open(os.path.join(path, 'chr_{}.fasta'.format(ch)), 'r') as f:
     for record in SeqIO.parse(f, 'fasta'):
         des = record.description
         if 'ref' in des.lower():
