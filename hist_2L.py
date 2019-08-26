@@ -8,7 +8,7 @@ t1 = time.time()
 ch = '2L'
 n_itr = 10000
 resample_size = 5
-n_subset = 1000
+n_subset = 0
 path = '/home/pasha/chr_data'
 
 sample = pd.read_csv(os.path.join(path, 'chr_{}_sample.csv'.format(ch)), index_col=0)
