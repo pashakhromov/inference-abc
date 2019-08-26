@@ -21,4 +21,4 @@ hist.fillna(0).to_csv(os.path.join(path, 'chr_{}_hist.csv'.format(ch)))
 
 t2 = time.time()
 with open(os.path.join(path, 'runtime_hist_{}.txt'.format(ch)), 'w') as f:
-    f.write('{0.2f}'.format(t2-t1))
+    f.write('{:0.2f}\n'.format(t2-t1))
