@@ -9,7 +9,7 @@ ch = '2L'
 n_itr = 10000
 resample_size = 5
 n_subset = 1000
-path = ''#'/home/pasha/chr_data'
+path = '/home/pasha/chr_data'
 
 sample = pd.read_csv(os.path.join(path, 'chr_{}_sample.csv'.format(ch)), index_col=0)
 
@@ -20,5 +20,5 @@ hist = sample.apply(lambda x: sample2hist(x, resample_size=resample_size, n_itr=
 hist.fillna(0).to_csv(os.path.join(path, 'chr_{}_hist.csv'.format(ch)))
 
 t2 = time.time()
-with open('runtime_hist_{}.txt'.format(ch), 'w') as f:
+with open(os.path.join(path, 'runtime_hist_{}.txt'.format(ch)), 'w') as f:
     f.write('{0.2f}'.format(t2-t1))
