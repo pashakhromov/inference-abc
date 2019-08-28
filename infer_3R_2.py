@@ -5,7 +5,7 @@ import time
 
 t1 = time.time()
 
-ch = '2R'
+ch = '3R'
 prior = 'n'  # 'n' for normal and 'u' for uniform
 n_sub = 0
 
@@ -48,14 +48,14 @@ def get_post_idx(stat_obs):
 
 stat_obs = pd.read_csv(os.path.join(path, 'chr_{}_hist.csv'.format(ch)), index_col=0)
 n = stat_obs.shape[0]
-stat_obs = stat_obs.iloc[:(n//2), :]
+stat_obs = stat_obs.iloc[(n//2):, :]
 if n_sub:
     stat_obs = stat_obs.iloc[:n_sub, :]
 stat_obs = stat_obs.astype(float)
 post_idx = stat_obs.apply(get_post_idx, axis=1)
-post_idx.to_csv(os.path.join(path, 'chr_{}_post_idx_1.csv'.format(ch)))
+post_idx.to_csv(os.path.join(path, 'chr_{}_post_idx_2.csv'.format(ch)))
 
 t2 = time.time()
-fname = os.path.join(path, 'infer_runtime_{}_1.txt'.format(ch))
+fname = os.path.join(path, 'infer_runtime_{}_2.txt'.format(ch))
 with open(fname, 'w') as f:
     f.write('{:0.2f}\n'.format(t2-t1))

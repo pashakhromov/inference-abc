@@ -5,7 +5,7 @@ import time
 
 t1 = time.time()
 
-ch = '3R'
+ch = '2R'
 prior = 'n'  # 'n' for normal and 'u' for uniform
 n_sub = 0
 
