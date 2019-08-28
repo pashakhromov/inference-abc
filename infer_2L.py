@@ -41,10 +41,10 @@ def get_post_idx(stat_obs):
 # post_idx = stat_obs.apply(get_post_idx, axis=1)
 # post_idx.to_csv(os.path.join(data_path, 'post_idx_{}.csv'.format(ch)))
 write_header = True
-for stat_obs in pd.read_csv(os.path.join(path, 'hist_{}.csv'.format(ch)), index_col=0, chunksize=1000):
+for stat_obs in pd.read_csv(os.path.join(path, 'chr_{}_hist.csv'.format(ch)), index_col=0, chunksize=1000):
     stat_obs = stat_obs.astype(float)
     post_idx = stat_obs.apply(get_post_idx, axis=1)
-    fname = os.path.join(path, 'post_idx_{}.csv'.format(ch))
+    fname = os.path.join(path, 'chr_{}_post_idx.csv'.format(ch))
     if write_header:
         post_idx.to_csv(fname, mode='a', header=True)
         write_header = False
