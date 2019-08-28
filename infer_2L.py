@@ -9,7 +9,7 @@ ch = '2L'
 prior = 'n'  # 'n' for normal and 'u' for uniform
 n_sub = 1000
 
-path = '/scratch/pnk16/abc/data'
+path = '/home/pasha/chr_data'
 
 par_sim = pd.read_csv(os.path.join(
     path, 'par_sim_{}.csv'.format(prior)), index_col=0)
