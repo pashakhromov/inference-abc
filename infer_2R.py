@@ -56,7 +56,7 @@ def get_post_idx(stat_obs):
 #     else:
 #         post_idx.to_csv(fname, mode='a', header=False)
 
-stat_obs = pd.read_csv(os.path.join(path_in, 'chr_{ch}_hist_{prior}{postfix}.csv'.format(**d)), index_col=0)
+stat_obs = pd.read_csv(os.path.join(path_in, 'chr_{ch}_hist.csv'.format(**d)), index_col=0)
 if n_sub:
     stat_obs = stat_obs.iloc[:n_sub, :]
 stat_obs = stat_obs.astype(float)
