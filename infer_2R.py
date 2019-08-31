@@ -7,12 +7,22 @@ t1 = time.time()
 
 ch = '2R'
 prior = 'n'  # 'n' for normal and 'u' for uniform
+is_neutral = True
+postfix = '_neutral' if is_neutral else ''
 n_sub = 0
 
-path = '/home/pasha/chr_data'
+path_sim = '/home/pasha/sim_data'
+path_in  = '/home/pasha/chr_data'
+path_out = path_in
 
-par_sim = pd.read_csv(os.path.join(path, 'par_sim_{}.csv'.format(prior)), index_col=0)
-stat_sim = pd.read_csv(os.path.join(path, 'stat_sim_{}.csv'.format(prior)), index_col=0)
+d = {
+    'ch'     : ch,
+    'prior'  : prior,
+    'postfix': postfix,
+}
+
+par_sim  = pd.read_csv(os.path.join(path_sim, 'par_sim_{prior}{postfix}.csv'.format(**d)), index_col=0)
+stat_sim = pd.read_csv(os.path.join(path_sim, 'stat_sim_{prior}{postfix}.csv'.format(**d)), index_col=0)
 
 idx_non_conv = stat_sim[stat_sim.isnull().any(axis=1)].index
 par_sim = par_sim.drop(idx_non_conv, axis=0)
@@ -46,14 +56,14 @@ def get_post_idx(stat_obs):
 #     else:
 #         post_idx.to_csv(fname, mode='a', header=False)
 
-stat_obs = pd.read_csv(os.path.join(path, 'chr_{}_hist.csv'.format(ch)), index_col=0)
+stat_obs = pd.read_csv(os.path.join(path_in, 'chr_{ch}_hist_{prior}{postfix}.csv'.format(**d)), index_col=0)
 if n_sub:
     stat_obs = stat_obs.iloc[:n_sub, :]
 stat_obs = stat_obs.astype(float)
 post_idx = stat_obs.apply(get_post_idx, axis=1)
-post_idx.to_csv(os.path.join(path, 'chr_{}_post_idx.csv'.format(ch)))
+post_idx.to_csv(os.path.join(path_out, 'chr_{ch}_post_idx_{prior}{postfix}.csv'.format(**d)))
 
 t2 = time.time()
-fname = os.path.join(path, 'infer_runtime_{}.txt'.format(ch))
+fname = os.path.join(path_out, 'chr_{ch}_infer_runtime_{prior}{postfix}.txt'.format(**d))
 with open(fname, 'w') as f:
     f.write('{:0.2f}\n'.format(t2-t1))

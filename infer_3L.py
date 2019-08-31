@@ -5,7 +5,7 @@ import time
 
 t1 = time.time()
 
-ch = 'X'
+ch = '3L'
 prior = 'n'  # 'n' for normal and 'u' for uniform
 is_neutral = True
 postfix = '_neutral' if is_neutral else ''
