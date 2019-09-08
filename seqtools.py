@@ -45,14 +45,17 @@ def n_segregating_sites(sample):
     Returns:
         (int)
     """
+    if sample.empty() or sample.shape[0] == 1:
+        return np.nan
     n_unique = sample.apply(
         lambda snp_slice: len(np.unique(snp_slice)), axis=0)
     return len(n_unique[n_unique != 1])
 
 
-def avg_n_poly(sample):
+def tajima(sample):
     """
-    Average number of polymorphisms. This function is SLOW.
+    Tajima estimate of theta = average number of polymorphisms.
+    This function is SLOW.
 
     Args:
         sample (pd.DataFrame): with index sample ids and columns being SNP positions.
@@ -60,12 +63,12 @@ def avg_n_poly(sample):
     Returns:
         (float)
     """
-    return np.mean([(a[1] != b[1]).sum() for a, b in itertools.combinations(sample.iterrows(), 2)])
+    return np.mean([(a[1].ne(b[1])).sum() for a, b in itertools.combinations(sample.iterrows(), 2)])
 
 
 def watterson(sample):
     """
-    Watterson estimate of theta.
+    Watterson estimate of theta = number of segregating sites / harmonic number.
 
     Args:
         sample (pd.DataFrame): with index sample ids and columns being SNP positions.
