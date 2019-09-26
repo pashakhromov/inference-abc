@@ -12,7 +12,7 @@ if __name__ == '__main__':
     t1 = time.time()
     ch = sys.argv[1]
 
-    n_core = 3
+    n_core = 8
     pool = Pool(n_core)
 
     args = [{'ch': ch, 'chunk': i, 'n_chunk': n_core} for i in range(n_core)]
