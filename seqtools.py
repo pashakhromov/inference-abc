@@ -45,7 +45,7 @@ def n_segregating_sites(sample):
     Returns:
         (int)
     """
-    if sample.empty() or sample.shape[0] == 1:
+    if sample.shape[0] in [0, 1]:
         return np.nan
     n_unique = sample.apply(
         lambda snp_slice: len(np.unique(snp_slice)), axis=0)
@@ -63,6 +63,8 @@ def tajima(sample):
     Returns:
         (float)
     """
+    if sample.shape[0] in [0, 1]:
+        return np.nan
     return np.mean([(a[1].ne(b[1])).sum() for a, b in itertools.combinations(sample.iterrows(), 2)])
 
 
