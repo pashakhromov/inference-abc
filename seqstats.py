@@ -66,7 +66,8 @@ def main(args):
 
     # c, c_max = 0, 50
     for w in wins:
-        bp = slice(w*w_size, (w+1)*w_size)
+        dw = w - d['w1']
+        bp = slice(dw*w_size, (dw+1)*w_size)
         lst_ = {}
         str_ = {}
         for k, v in seq.items():
