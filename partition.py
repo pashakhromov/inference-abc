@@ -1,6 +1,3 @@
-import numpy as np
-
-
 def partition(n):
     """
     Integer partitions of a number.
@@ -15,10 +12,10 @@ def partition(n):
         partition(3) -> [(3,), (2, 1), (1, 1, 1)]
     """
     answer = set()
-    answer.add((n, ))
+    answer.add((n,))
     for x in range(1, n):
         for y in partition(n - x):
-            answer.add(tuple(sorted((x, ) + y, reverse=True)))
+            answer.add(tuple(sorted((x,) + y, reverse=True)))
     return sorted(list(answer), key=lambda x: (-x[0], len(x)))
 
 
@@ -61,18 +58,19 @@ def partition_map(n):
     return {p: partition_repr(p) for p in partition(n)}
 
 
-class Parititon:
+class Partition:
     def __init__(self, n):
         self.n = n
         self.part = partition(self.n)
         self.repr = partition_repr(self.n)
         self.map = partition_map(self.n)
+
     def __repr__(self):
         return 'Partition({})'.format(self.n)
 
 
 if __name__ == '__main__':
-    for z in range(2, 6+1):
-        print("number of int partitions of %d is %d" % (z, len(partition(z))))
+    for n in range(2, 6 + 1):
+        print("number of integer partitions of {n} is {n_par}".format(n=n, n_par=len(partition(n))))
     for i, p in enumerate(partition_repr(6)):
-        print(i+1, p)
+        print(i + 1, p)

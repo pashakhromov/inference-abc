@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 from collections import Counter
 import itertools
-from partition import Parititon
+from partition import Partition
 
 
 def drop_na_seq(sample):
@@ -170,7 +170,7 @@ def sample2hist(sample, resample_size, n_itr):
     Returns:
         Histogram (pd.Series) with index being partitions.
     """
-    part = Parititon(resample_size)
+    part = Partition(resample_size)
     sample_non_na = np.round(pd.Series(sample).dropna()).astype(int)
     if len(sample_non_na) == 0:
         return pd.Series(np.nan, index=part.repr)
