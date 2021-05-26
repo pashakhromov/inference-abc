@@ -47,8 +47,7 @@ def n_segregating_sites(sample):
     """
     if sample.shape[0] in [0, 1]:
         return np.nan
-    n_unique = sample.apply(
-        lambda snp_slice: len(np.unique(snp_slice)), axis=0)
+    n_unique = sample.apply(lambda snp_slice: len(np.unique(snp_slice)), axis=0)
     return len(n_unique[n_unique != 1])
 
 
@@ -174,8 +173,6 @@ def sample2hist(sample, resample_size, n_itr):
     sample_non_na = np.round(pd.Series(sample).dropna()).astype(int)
     if len(sample_non_na) == 0:
         return pd.Series(np.nan, index=part.repr)
-    h = pd.DataFrame(
-        np.random.choice(sample_non_na, size=(n_itr, part.n), replace=True)
-    ).apply(n_counts, axis=1)
+    h = pd.DataFrame(np.random.choice(sample_non_na, size=(n_itr, part.n), replace=True)).apply(n_counts, axis=1)
     h = h.value_counts() * 1.0 / n_itr
     return h.rename(part.map)

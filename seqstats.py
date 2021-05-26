@@ -91,8 +91,7 @@ def main(args):
         if 'n_non_na' in stat.keys():
             stat['n_non_na'][w] = lst_.shape[0]
         if 'sample' in stat.keys():
-            stat['sample'][w] = seqtools.encode_sample(
-                str_, pad_with_nan=True, sample_size=n_seq)
+            stat['sample'][w] = seqtools.encode_sample(str_, pad_with_nan=True, sample_size=n_seq)
 
         # if c > c_max:
         #     break
