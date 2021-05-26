@@ -25,8 +25,7 @@ def main(args):
     args['postfix'] = '_neutral' if args['is_neutral'] else ''
     path = get_path()
 
-    stat_sim = pd.read_csv(os.path.join(
-        path['sim'], 'stat_sim_{prior}{postfix}.csv'.format(**args)), index_col=0)
+    stat_sim = pd.read_csv(os.path.join(path['sim'], 'stat_sim_{prior}{postfix}.csv'.format(**args)), index_col=0)
     idx_non_conv = stat_sim[stat_sim.isnull().any(axis=1)].index
     stat_sim = stat_sim.drop(idx_non_conv, axis=0)
 
@@ -34,14 +33,11 @@ def main(args):
     print(path)
     print(stat_sim.shape)
 
-    stat_obs = pd.read_csv(os.path.join(
-        path['in'], 'chr_{ch}_hist.csv'.format(**args)), index_col=0)
+    stat_obs = pd.read_csv(os.path.join(path['in'], 'chr_{ch}_hist.csv'.format(**args)), index_col=0)
     stat_obs = stat_obs.astype(float)
     stat_obs = stat_obs.iloc[:1000, :]
-    post_idx = stat_obs.apply(lambda x: get_post_idx(
-        x, stat_sim, rho2_metric=args['rho2_metric']), axis=1)
-    fpath = os.path.join(
-        path['out'], 'chr_{ch}_post_idx_{prior}{postfix}.csv'.format(**args))
+    post_idx = stat_obs.apply(lambda x: get_post_idx(x, stat_sim, rho2_metric=args['rho2_metric']), axis=1)
+    fpath = os.path.join(path['out'], 'chr_{ch}_post_idx_{prior}{postfix}.csv'.format(**args))
     post_idx.to_csv(fpath)
 
     # c = 0

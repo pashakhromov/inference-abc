@@ -26,12 +26,10 @@ if __name__ == '__main__':
 
     path = get_path()
     for k, v in out.items():
-        fpath = os.path.join(
-            path['out'], 'chr_{ch}_{k}.csv'.format(ch=ch, k=k))
+        fpath = os.path.join(path['out'], 'chr_{ch}_{k}.csv'.format(ch=ch, k=k))
         pd.concat(v).to_csv(fpath)
 
     t2 = time.time()
-    fpath = os.path.join(
-        path['out'], 'chr_{ch}_runtime_seqstats.csv'.format(ch=ch))
+    fpath = os.path.join(path['out'], 'chr_{ch}_runtime_seqstats.csv'.format(ch=ch))
     with open(fpath, 'w') as f:
         f.write('{:0.1f}\n'.format(t2-t1))
