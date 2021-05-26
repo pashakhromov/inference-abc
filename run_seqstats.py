@@ -6,7 +6,7 @@ from multiprocessing import Pool
 import pandas as pd
 import os
 import time
-from myio import get_path
+from my_io import get_path
 
 if __name__ == '__main__':
     t1 = time.time()

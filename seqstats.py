@@ -6,8 +6,7 @@ import seqtools
 import os
 import sys
 from Bio import SeqIO
-import time
-from myio import get_path, read_series, read_df
+from my_io import get_path, read_series, read_df
 
 
 def main(args):

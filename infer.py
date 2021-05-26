@@ -4,7 +4,7 @@ import os
 import time
 import socket
 import sys
-from myio import get_path, read_series, read_df
+from my_io import get_path, read_series, read_df
 
 
 def get_post_idx(stat_obs, stat_sim, rho2_metric='chi2', n_top=100):

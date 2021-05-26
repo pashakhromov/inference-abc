@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
-
-import os
 import socket
 
 
-def get_path():
-    if socket.gethostname() == 'laptopus':
+def get_path(my_name='Ulysses'):
+    if socket.gethostname() == my_name:
         return {
             'sim': '/home/pasha/Desktop/phd/sim_data',
             'in': '/home/pasha/Desktop/phd/chr_data',
