@@ -9,6 +9,12 @@ def get_path():
             'in': '/home/pasha/Desktop/phd/chr_data',
             'out': '/home/pasha/Desktop/phd/chr_data/test',
         }
+    if socket.gethostname() == 'Ulysses':
+        return {
+            'sim': '/Users/pasha/Desktop/phd/sim_data',
+            'in': '/Users/pasha/Desktop/phd/chr_data',
+            'out': '/Users/pasha/Desktop/phd/chr_data/test',
+        }
     else:
         return {
             'sim': '/home/pasha/sim_data',
