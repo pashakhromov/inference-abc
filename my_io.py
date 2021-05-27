@@ -2,8 +2,8 @@
 import socket
 
 
-def get_path(my_name='Ulysses'):
-    if socket.gethostname() == my_name:
+def get_path():
+    if socket.gethostname() == 'laptopus':
         return {
             'sim': '/home/pasha/Desktop/phd/sim_data',
             'in': '/home/pasha/Desktop/phd/chr_data',
