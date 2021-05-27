@@ -2,36 +2,15 @@
 
 from infer import main
 import sys
-from multiprocessing import Pool
-import pandas as pd
-import os
-import time
-from my_io import get_path
+from my_io import run
 
 if __name__ == '__main__':
-    t1 = time.time()
-    ch = sys.argv[1]
-
-    n_core = 8
-    pool = Pool(n_core)
-
-    args = [{'ch': ch, 'chunk': i, 'n_chunk': n_core} for i in range(n_core)]
-    # results = pool.map(main, args)
-
-    # out = {k: [] for k in results[0].keys()}
-
-    # for r in results:
-    #     for k, v in out.items():
-    #         out[k].append(r[k])
-
-    # path = get_path()
-    # for k, v in out.items():
-    #     fpath = os.path.join(
-    #         path['out'], 'chr_{ch}_{k}.csv'.format(ch=ch, k=k))
-    #     pd.concat(v).to_csv(fpath)
-
-    # t2 = time.time()
-    # fpath = os.path.join(
-    #     path['out'], 'chr_{ch}_runtime_seqstats.csv'.format(ch=ch))
-    # with open(fpath, 'w') as f:
-    #     f.write('{:0.1f}\n'.format(t2-t1))
+    var = {
+        'ch': sys.argv[1],
+        'n_core': 1,
+        'fun': main,
+        'prior': 'n',  # 'n' for normal and 'u' for uniform
+        'is_neutral': True,
+    }
+    var['block'] = 'post_idx_{prior}{postfix}'.format(**var)
+    run(var)

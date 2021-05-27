@@ -4,9 +4,8 @@ import pandas as pd
 import numpy as np
 import seqtools
 import os
-import sys
 from Bio import SeqIO
-from my_io import get_path, read_series, read_df
+from my_io import get_path, read_series
 
 
 def main(args):
@@ -15,8 +14,7 @@ def main(args):
     n_chunk = int(args['n_chunk'])
 
     path = get_path()
-    data = pd.read_csv(os.path.join(
-        path['in'], 'chr_{}_data.csv'.format(ch)), **read_series)
+    data = pd.read_csv(os.path.join(path['in'], 'chr_{}_data.csv'.format(ch)), **read_series)
 
     w_size = 100
     n_win = data.l_chr // w_size
@@ -63,7 +61,6 @@ def main(args):
         'sample': {},
     }
 
-    # c, c_max = 0, 50
     for w in wins:
         dw = w - d['w1']
         bp = slice(dw*w_size, (dw+1)*w_size)
@@ -92,9 +89,6 @@ def main(args):
         if 'sample' in stat.keys():
             stat['sample'][w] = seqtools.encode_sample(str_, pad_with_nan=True, sample_size=n_seq)
 
-        # if c > c_max:
-        #     break
-        # c += 1
 
     stat = {k: pd.DataFrame({k: v}) for k, v in stat.items()}
     return stat
